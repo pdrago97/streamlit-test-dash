@@ -55,8 +55,13 @@ def show_sales_by_location():
 
 def show_map():
     fig = px.scatter_mapbox(df, lat="latitude", lon="longitude", color="sales")
-    fig.update_layout(mapbox_style="open-street-map").show()
-    st.markdown("## The data graph is opened in a new tab on your browser.")
+    fig.write_html("data_graph.html")
+
+    with open("data_graph.html", "r") as f:
+        file = f.read()
+
+    st.markdown("#### The data graph is opened in a new tab on your browser.")
+    st.download_button(on_click=fig.update_layout(mapbox_style="open-street-map").show(), label="Download the data graph", file_name="data_graph.html", data=file)
 
 
 st.title("Sales Analysis Dashboard")
