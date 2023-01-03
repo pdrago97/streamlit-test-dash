@@ -36,7 +36,30 @@ df = pd.read_csv("sales_data.csv")
 def intro():
     st.markdown("#### This sample collection was made for studies purposes only.")
     st.markdown("###### It was made with python and streamlit in just a couple of minutes with dummy data, just for proving the concept. Have fun! :smile: ")
+    
+    st.markdown("### The sample data is created by the snippet below.")
+    st.code(
+        """
+locations = ["New York", "Chicago", "San Francisco", "Los Angeles", "Miami"]
 
+# Generate random sales data
+data = []
+for i in range(100):
+    date = datetime.datetime.now() - datetime.timedelta(days=i)
+    location = random.choice(locations)
+    # Generate a random latitude and longitude for the location
+    latitude = random.uniform(25, 50)  # Random value between 25 and 50
+    longitude = random.uniform(-125, -65)  # Random value between -125 and -65
+    sales = random.randint(100, 1000)
+    data.append((date.strftime("%Y-%m-%d"), location, latitude, longitude, sales))
+
+# Write the data to a CSV file
+with open("sales_data.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["date", "location", "latitude", "longitude", "sales"])
+    writer.writerows(data)
+        """)
+    
 def show_sales_over_time():
     # Group the data by date and sum the sales
     sales_by_date = df.groupby("date")["sales"].sum().reset_index()
